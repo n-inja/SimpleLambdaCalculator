@@ -2,22 +2,35 @@
   <div>
     <textarea v-model="input">
     </textarea>
+    <br>
+    <button @click="calc">
+      caluculate
+    </button>
+    <br>
+    <div class="output">
+      <AST :model="output"></AST>
+    </div>
   </div>
 </template>
 
 <script>
 import lambda from '@/bin/lambda'
+import AST from '@/components/ast'
 export default {
   name: 'HelloWorld',
   data () {
     return {
-      input: 'write lambda statement here'
+      input: 'write lambda statement here',
+      output: {type: '', key: 0}
     }
   },
   methods: {
-    lambda () {
-      return lambda();
+    calc () {
+      this.output = lambda(this.input)
     }
+  },
+  components: {
+    'AST': AST
   }
 }
 </script>
