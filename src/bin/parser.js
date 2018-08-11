@@ -53,11 +53,11 @@ const table = [
 ]
 
 const syntax = [
-  {left: 'S', right: ['L']},
-  {left: 'L', right: ['(', 'λ', 'I', '.', 'L', ')']},
-  {left: 'L', right: ['(', 'L', 'L', ')']},
-  {left: 'L', right: ['I']},
-  {left: 'I', right: ['id']}
+  {left: 'S', right: ['L'], name: 'start'},
+  {left: 'L', right: ['(', 'λ', 'I', '.', 'L', ')'], name: 'Lambda-define'},
+  {left: 'L', right: ['(', 'L', 'L', ')'], name: 'Lambda-apply'},
+  {left: 'L', right: ['I'], name: 'Lambda-identifier'},
+  {left: 'I', right: ['id'], name: 'Identifier'}
 ]
 
 class AST {
@@ -70,6 +70,7 @@ class AST {
     this.type = syntax[id].left
     this.children = arr
     this.key = '' + Math.random()
+    this.name = syntax[id].name
   }
   toString () {
     return this.type
