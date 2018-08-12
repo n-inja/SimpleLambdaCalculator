@@ -65,8 +65,7 @@ class AST {
     const s = syntax[id]
     let b = true
     for (let i = 0; i < s.right.length; i++) if (s.right[i] !== '' + arr[i]) b = false
-    console.log(`${arr}`)
-    if (!b) throw new Error(`unexpected syntax ${id}`)
+    if (!b) throw new Error(`SyntaxError: Unexpected syntax ${id}`)
     this.type = syntax[id].left
     this.children = arr
     this.key = '' + Math.random()
@@ -101,8 +100,7 @@ const parser = (tokens) => {
   const stack = new Stack()
   stack.push(0)
   const f = token => {
-    console.log(token, stack, table[stack.top()][token.type])
-    if (!table[stack.top()][token.type]) throw new Error(`syntax error input ${token.index}`)
+    if (!table[stack.top()][token.type]) throw new Error(`SyntaxError: Input[${token.index}]:${token.identifier}`)
     if (table[stack.top()][token.type].a === 's') {
       const state = stack.top()
       stack.push(token)
@@ -118,7 +116,7 @@ const parser = (tokens) => {
       }
       const state = stack.top()
       stack.push(new AST(id, right))
-      if (!table[state]['' + stack.top()]) throw new Error(`syntax error`)
+      if (!table[state]['' + stack.top()]) throw new Error(`SyntaxError: Unknown syntax`)
       stack.push(table[state]['' + stack.top()].i)
       f(token)
     }

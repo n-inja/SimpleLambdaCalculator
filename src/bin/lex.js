@@ -13,7 +13,7 @@ class Token {
     this.isBracketsEnd = bracketsEnd.test(s)
     this.isDot = dotRegex.test(s)
     if (!this.isLambda && !this.isIdentifier && !this.isDot && !this.isBracketsStart && !this.isBracketsEnd) {
-      throw new Error(`unexpected token input ${this.index}`)
+      throw new Error(`LexicalError: Unexpected charactor input[${this.index}]:${s}`)
     }
     this.key = '' + Math.random()
   }
@@ -41,7 +41,7 @@ const lex = (str) => {
     if (escapeRegex.test(str[i])) continue
     ret.push(new Token(str[i], i))
   }
-  ret.push({type: '$', index: str.length + 1})
+  ret.push({type: '$', index: str.length + 1, identifier: '$'})
   return ret
 }
 
